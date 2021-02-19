@@ -1,0 +1,15 @@
+<Config>
+  <LogLevel>Info</LogLevel>
+  <Port>8989</Port>
+  <UrlBase></UrlBase>
+  <BindAddress>*</BindAddress>
+  <SslPort>9898</SslPort>
+  <EnableSsl>False</EnableSsl>
+  <ApiKey>70a6cd28bab54073a218bafc15510409</ApiKey>
+  <AuthenticationMethod>None</AuthenticationMethod>
+  <Branch>phantom-develop</Branch>
+  <LaunchBrowser>False</LaunchBrowser>
+  <SslCertHash></SslCertHash>
+  <UpdateMechanism>Docker</UpdateMechanism>
+  <UpdateAutomatically>True</UpdateAutomatically>
+</Config>

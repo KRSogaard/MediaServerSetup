@@ -1,35 +1,77 @@
 version: "3.7"
 services:
-  plex-media-server:
-    image: plexinc/pms-docker:latest
-    ports:
-      - 32400:32400
-    enviroment:
-
+  # plex-media-server:
+  #   image: plexinc/pms-docker
+  #   container_name: plex-media-server
+  #   environment:
+  #     - PUID=1000
+  #     - PLEX_CLAIM=claim-5AHQ8c2eByjxPThDeLVT
+  #     - ADVERTISE_IP=http://192.168.1.101:32400/
+  #     - TZ=America/Los_Angeles
+  #   ports:
+  #     - 32400:32400/tcp
+  #     - 3005:3005/tcp
+  #     - 8324:8324/tcp
+  #     - 32469:32469/tcp
+  #     - 1900:1900/udp
+  #     - 32410:32410/udp
+  #     - 32412:32412/udp
+  #     - 32413:32413/udp
+  #     - 32414:32414/udp
+  #   volumes:
+  #     - ./plex-media-server/config:/config
+  #     - ./plex-media-server/transcodes:/transcode
+  #     - ./plex-media-server/data:/data
+  #     - /mnt/e/Series:/series
+  #     - /mnt/e/Anime:/anime
+  #     - /mnt/d/Movies:/movies
+  #   restart: unless-stopped
+  #   network_mode: host
   nzbget:
-    image: ghcr.io/linuxserver/nzbget
+    image: ghcr.io/linuxserver/nzbget:testing
     container_name: nzbget
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Los_Angeles
     volumes:
       - ./nzbget/config:/config
       - ./nzbget/downloads:/downloads
+      - /mnt/e/Series:/series
+      - /mnt/e/Anime:/anime
+      - /mnt/d/Movies:/movies
     ports:
       - 9000:6789
     restart: unless-stopped
   sonarr:
-    image: ghcr.io/linuxserver/sonarr
+    image: ghcr.io/linuxserver/sonarr:preview
     container_name: sonarr
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=America/Los_Angeles
     volumes:
-      - /path/to/data:/config
-      - /path/to/tvseries:/tv
-      - /path/to/downloadclient-downloads:/downloads
+      - ./sonarr/config:/config
+      - /mnt/e/Series:/series
+      - /mnt/e/Anime:/anime
+      - ./nzbget/downloads:/downloads
+      - /mnt/d/Movies:/movies
     ports:
       - 9001:8989
+    restart: unless-stopped
+  radarr:
+    image: ghcr.io/linuxserver/radarr:develop
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    volumes:
+      - ./radarr/config:/config
+      - ./nzbget/downloads:/downloads
+      - /mnt/d/Movies:/movies
+      - /mnt/e/Series:/series
+      - /mnt/e/Anime:/anime
+    ports:
+      - 9002:7878
     restart: unless-stopped
