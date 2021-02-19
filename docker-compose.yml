@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  plex-media-server:
+    image: plexinc/pms-docker:latest
+    ports:
+      - 32400:32400
+    enviroment:
+
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./nzbget/config:/config
+      - ./nzbget/downloads:/downloads
+    ports:
+      - 9000:6789
+    restart: unless-stopped
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /path/to/data:/config
+      - /path/to/tvseries:/tv
+      - /path/to/downloadclient-downloads:/downloads
+    ports:
+      - 9001:8989
+    restart: unless-stopped
