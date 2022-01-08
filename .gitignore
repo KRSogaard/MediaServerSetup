@@ -1,0 +1,7 @@
+[Ll]ogs/
+*.log
+nzbget/downloads/completed/**/*
+nzbget/downloads/intermediate/**/*
+nzbget/downloads/nzb/***/*
+nzbget/downloads/queue/***/*
+nzbget/downloads/tmp/**/*
